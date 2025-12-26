@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Montserrat:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Montserrat:wght@300;400;500;600;700&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -6,93 +6,52 @@
 
 @layer base {
   :root {
-    /* El Charret - Campero Elegante Theme */
-    --background: 35 33% 95%; /* Crema claro */
-    --foreground: 25 45% 15%; /* Marrón oscuro */
+    /* La Fonda - Dark Elegant Theme */
+    --background: 0 0% 4%; /* Negro profundo #0B0B0B */
+    --foreground: 0 0% 96%; /* Blanco humo #F5F5F5 */
 
-    --card: 35 30% 98%;
-    --card-foreground: 25 45% 15%;
+    --card: 0 0% 10%; /* Gris carbón #1A1A1A */
+    --card-foreground: 0 0% 96%;
 
-    --popover: 35 30% 98%;
-    --popover-foreground: 25 45% 15%;
+    --popover: 0 0% 10%;
+    --popover-foreground: 0 0% 96%;
 
-    --primary: 25 45% 18%; /* Marrón principal #3D2817 */
-    --primary-foreground: 35 33% 95%;
+    --primary: 0 0% 86%; /* Gris claro #DADADA */
+    --primary-foreground: 0 0% 4%;
 
-    --secondary: 35 45% 90%; /* Crema #F5E6D3 */
-    --secondary-foreground: 25 45% 18%;
+    --secondary: 0 0% 18%; /* Gris medio #2E2E2E */
+    --secondary-foreground: 0 0% 96%;
 
-    --muted: 35 25% 88%;
-    --muted-foreground: 25 20% 45%;
+    --muted: 0 0% 14%;
+    --muted-foreground: 220 9% 60%; /* Gris texto #9CA3AF */
 
-    --accent: 43 70% 53%; /* Dorado #D4AF37 */
-    --accent-foreground: 25 45% 12%;
+    --accent: 0 0% 86%;
+    --accent-foreground: 0 0% 4%;
 
     --destructive: 0 72% 51%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 35 30% 82%;
-    --input: 35 30% 85%;
-    --ring: 43 70% 53%;
+    --border: 0 0% 20%;
+    --input: 0 0% 14%;
+    --ring: 0 0% 86%;
 
-    /* Custom El Charret colors */
-    --charret-brown: 25 45% 18%;
-    --charret-brown-light: 25 35% 30%;
-    --charret-cream: 35 45% 92%;
-    --charret-cream-dark: 35 35% 85%;
-    --charret-gold: 43 70% 53%;
-    --charret-gold-light: 43 65% 65%;
-    --charret-black: 0 0% 8%;
-    --charret-white: 0 0% 98%;
+    /* Custom La Fonda colors */
+    --fonda-black: 0 0% 4%;
+    --fonda-carbon: 0 0% 10%;
+    --fonda-gray: 0 0% 18%;
+    --fonda-light: 0 0% 86%;
+    --fonda-white: 0 0% 96%;
+    --fonda-text-muted: 220 9% 60%;
 
     /* Sidebar (admin) */
-    --sidebar-background: 25 45% 12%;
-    --sidebar-foreground: 35 33% 95%;
-    --sidebar-primary: 43 70% 53%;
-    --sidebar-primary-foreground: 25 45% 12%;
-    --sidebar-accent: 25 35% 20%;
-    --sidebar-accent-foreground: 35 33% 95%;
-    --sidebar-border: 25 35% 25%;
-    --sidebar-ring: 43 70% 53%;
-  }
-
-  .dark {
-    --background: 25 45% 8%;
-    --foreground: 35 33% 95%;
-
-    --card: 25 40% 12%;
-    --card-foreground: 35 33% 95%;
-
-    --popover: 25 40% 12%;
-    --popover-foreground: 35 33% 95%;
-
-    --primary: 43 70% 53%;
-    --primary-foreground: 25 45% 8%;
-
-    --secondary: 25 35% 18%;
-    --secondary-foreground: 35 33% 95%;
-
-    --muted: 25 30% 20%;
-    --muted-foreground: 35 20% 60%;
-
-    --accent: 43 70% 53%;
-    --accent-foreground: 25 45% 8%;
-
-    --destructive: 0 62% 45%;
-    --destructive-foreground: 0 0% 100%;
-
-    --border: 25 30% 25%;
-    --input: 25 30% 20%;
-    --ring: 43 70% 53%;
-
-    --sidebar-background: 25 45% 6%;
-    --sidebar-foreground: 35 33% 95%;
-    --sidebar-primary: 43 70% 53%;
-    --sidebar-primary-foreground: 25 45% 8%;
-    --sidebar-accent: 25 35% 15%;
-    --sidebar-accent-foreground: 35 33% 95%;
-    --sidebar-border: 25 35% 20%;
-    --sidebar-ring: 43 70% 53%;
+    --sidebar-background: 0 0% 6%;
+    --sidebar-foreground: 0 0% 96%;
+    --sidebar-primary: 0 0% 86%;
+    --sidebar-primary-foreground: 0 0% 4%;
+    --sidebar-accent: 0 0% 14%;
+    --sidebar-accent-foreground: 0 0% 96%;
+    --sidebar-border: 0 0% 20%;
+    --sidebar-ring: 0 0% 86%;
   }
 }
 
@@ -119,24 +78,24 @@
     @apply max-w-7xl mx-auto;
   }
 
-  .text-gradient-gold {
-    @apply bg-gradient-to-r from-accent via-charret-gold-light to-accent bg-clip-text text-transparent;
+  .card-fonda {
+    @apply bg-card rounded-lg border border-border/50 transition-all duration-300 hover:border-primary/30 hover:shadow-lg hover:shadow-primary/5;
   }
 
-  .bg-pattern-leather {
-    background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23d4af37' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+  .btn-fonda {
+    @apply inline-flex items-center justify-center px-6 py-3 bg-primary text-primary-foreground font-medium rounded-md transition-all duration-300 hover:bg-fonda-light hover:shadow-lg hover:-translate-y-0.5;
   }
 
-  .btn-charret {
-    @apply inline-flex items-center justify-center px-6 py-3 bg-primary text-primary-foreground font-medium rounded-md transition-all duration-300 hover:bg-charret-brown-light hover:shadow-lg hover:-translate-y-0.5;
+  .btn-fonda-outline {
+    @apply inline-flex items-center justify-center px-6 py-3 border border-primary/50 text-primary font-medium rounded-md transition-all duration-300 hover:bg-primary/10;
   }
 
-  .btn-charret-outline {
-    @apply inline-flex items-center justify-center px-6 py-3 border-2 border-primary text-primary font-medium rounded-md transition-all duration-300 hover:bg-primary hover:text-primary-foreground;
+  .btn-fonda-ghost {
+    @apply inline-flex items-center justify-center px-6 py-3 text-foreground font-medium rounded-md transition-all duration-300 hover:bg-secondary;
   }
 
-  .btn-charret-gold {
-    @apply inline-flex items-center justify-center px-6 py-3 bg-accent text-accent-foreground font-semibold rounded-md transition-all duration-300 hover:brightness-110 hover:shadow-lg hover:-translate-y-0.5;
+  .glow-subtle {
+    box-shadow: 0 0 20px rgba(218, 218, 218, 0.1);
   }
 }
 

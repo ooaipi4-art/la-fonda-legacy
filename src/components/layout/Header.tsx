@@ -1,145 +1,118 @@
-import { useState, useEffect, useRef } from 'react';
-import { Link, useLocation } from 'react-router-dom';
-import { Menu, X, ShoppingCart } from 'lucide-react';
-import { useCart } from '@/contexts/CartContext';
-import { cn } from '@/lib/utils';
-import gsap from "gsap"; // Importar GSAP
+import logoLaFonda from "@/assets/logo-lafonda.png";
+import { Menu, X } from "lucide-react";
+import { useState, useEffect } from "react";
+import { Link, useLocation } from "react-router-dom";
+import { cn } from "@/lib/utils";
+
+const navLinks = [
+  { href: "#inicio", label: "Inicio" },
+  { href: "#menu", label: "Menú" },
+  { href: "#nosotros", label: "Nosotros" },
+  { href: "#contacto", label: "Contacto" },
+];
 
 export const Header = () => {
+  const [isOpen, setIsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const { totalItems, setIsOpen } = useCart();
   const location = useLocation();
-  const logoRef = useRef<HTMLSpanElement>(null);
+  const isHomePage = location.pathname === "/";
 
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 50);
     };
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
-
-  // Animate logo when intro finishes
-  useEffect(() => {
-    const animateLogo = () => {
-      if (!logoRef.current) return;
-      
-      gsap.to(logoRef.current, {
-        opacity: 1,
-        y: 0,
-        filter: "blur(0px)",
-        duration: 0.9,
-        ease: "power3.out"
-      });
-    };
-
-    window.addEventListener('intro-finished', animateLogo);
-    return () => window.removeEventListener('intro-finished', animateLogo);
-  }, []);
-
-  const isHomePage = location.pathname === '/';
 
   return (
     <header
       className={cn(
-        'fixed top-0 left-0 right-0 z-50 transition-all duration-300',
+        "fixed top-0 left-0 right-0 z-50 transition-all duration-300",
         isScrolled || !isHomePage
-          ? 'bg-primary/95 backdrop-blur-md shadow-lg'
-          : 'bg-transparent'
+          ? "bg-background/95 backdrop-blur-md shadow-lg border-b border-border"
+          : "bg-transparent"
       )}
     >
-      <div className="container-custom">
-        <nav className="flex items-center justify-between h-20">
+      <div className="container mx-auto px-4">
+        <div className="flex items-center justify-between h-20">
           {/* Logo */}
           <Link to="/" className="flex items-center gap-3">
-            <span
-              ref={logoRef}
-              className="font-display text-2xl md:text-3xl font-bold text-charret-white"
-              style={{
-                opacity: 0,
-                transform: 'translateY(40px)',
-                filter: 'blur(8px)',
-                display: 'inline-block',
-                willChange: 'opacity, transform, filter'
-              }}
-            >
-              El Charret
+            <img
+              src={logoLaFonda}
+              alt="La Fonda"
+              className="w-12 h-12 rounded-full object-cover"
+            />
+            <span className="font-display text-2xl font-semibold text-foreground">
+              La Fonda
             </span>
           </Link>
 
-          {/* Desktop Navigation */}
-          <div className="hidden lg:flex items-center gap-8">
-            {isHomePage && (
-              <>
-                <a href="#inicio" className="text-charret-white/90 hover:text-accent transition-colors font-medium">Inicio</a>
-                <a href="#nosotros" className="text-charret-white/90 hover:text-accent transition-colors font-medium">Nosotros</a>
-                <a href="#menu" className="text-charret-white/90 hover:text-accent transition-colors font-medium">Menú</a>
-                <a href="#galeria" className="text-charret-white/90 hover:text-accent transition-colors font-medium">Galería</a>
-                <a href="#reservas" className="text-charret-white/90 hover:text-accent transition-colors font-medium">Reservas</a>
-                <a href="#contacto" className="text-charret-white/90 hover:text-accent transition-colors font-medium">Contacto</a>
-              </>
-            )}
-            {!isHomePage && (
+          {/* Nav Desktop */}
+          <nav className="hidden md:flex items-center gap-8">
+            {isHomePage ? (
+              navLinks.map((link) => (
+                <a
+                  key={link.href}
+                  href={link.href}
+                  className="text-muted-foreground hover:text-foreground transition-colors font-medium"
+                >
+                  {link.label}
+                </a>
+              ))
+            ) : (
               <Link
                 to="/"
-                className="text-charret-white/90 hover:text-accent transition-colors font-medium"
+                className="text-muted-foreground hover:text-foreground transition-colors font-medium"
               >
                 Volver al Inicio
               </Link>
             )}
-          </div>
+            <a href="#reservas" className="btn-fonda text-sm">
+              Reservar Mesa
+            </a>
+          </nav>
 
-          {/* Cart & Mobile Menu */}
-          <div className="flex items-center gap-4">
-            <button
-              onClick={() => setIsOpen(true)}
-              className="relative p-2 text-charret-white hover:text-accent transition-colors"
-              aria-label="Abrir carrito"
-            >
-              <ShoppingCart className="w-6 h-6" />
-              {totalItems > 0 && (
-                <span className="absolute -top-1 -right-1 w-5 h-5 bg-accent text-accent-foreground text-xs font-bold rounded-full flex items-center justify-center">
-                  {totalItems}
-                </span>
-              )}
-            </button>
+          {/* Mobile Menu Button */}
+          <button
+            onClick={() => setIsOpen(!isOpen)}
+            className="md:hidden p-2 text-foreground"
+          >
+            {isOpen ? <X size={24} /> : <Menu size={24} />}
+          </button>
+        </div>
 
-            <button
-              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className="lg:hidden p-2 text-charret-white"
-              aria-label="Toggle menu"
-            >
-              {isMobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
-            </button>
-          </div>
-        </nav>
-
-        {/* Mobile Menu */}
-        {isMobileMenuOpen && (
-          <div className="lg:hidden absolute top-20 left-0 right-0 bg-primary/95 backdrop-blur-md border-t border-charret-brown-light">
-            <div className="flex flex-col p-4 space-y-4">
-              {isHomePage && (
-                <>
-                  <a href="#inicio" onClick={() => setIsMobileMenuOpen(false)} className="text-charret-white/90 hover:text-accent transition-colors font-medium py-2">Inicio</a>
-                  <a href="#nosotros" onClick={() => setIsMobileMenuOpen(false)} className="text-charret-white/90 hover:text-accent transition-colors font-medium py-2">Nosotros</a>
-                  <a href="#menu" onClick={() => setIsMobileMenuOpen(false)} className="text-charret-white/90 hover:text-accent transition-colors font-medium py-2">Menú</a>
-                  <a href="#galeria" onClick={() => setIsMobileMenuOpen(false)} className="text-charret-white/90 hover:text-accent transition-colors font-medium py-2">Galería</a>
-                  <a href="#reservas" onClick={() => setIsMobileMenuOpen(false)} className="text-charret-white/90 hover:text-accent transition-colors font-medium py-2">Reservas</a>
-                  <a href="#contacto" onClick={() => setIsMobileMenuOpen(false)} className="text-charret-white/90 hover:text-accent transition-colors font-medium py-2">Contacto</a>
-                </>
-              )}
-              {!isHomePage && (
-                <Link
-                  to="/"
-                  onClick={() => setIsMobileMenuOpen(false)}
-                  className="text-charret-white/90 hover:text-accent transition-colors font-medium py-2"
+        {/* Mobile Nav */}
+        {isOpen && (
+          <nav className="md:hidden py-4 border-t border-border animate-fade-in">
+            {isHomePage ? (
+              navLinks.map((link) => (
+                <a
+                  key={link.href}
+                  href={link.href}
+                  onClick={() => setIsOpen(false)}
+                  className="block py-3 text-muted-foreground hover:text-foreground transition-colors"
                 >
-                  Volver al Inicio
-                </Link>
-              )}
-            </div>
-          </div>
+                  {link.label}
+                </a>
+              ))
+            ) : (
+              <Link
+                to="/"
+                onClick={() => setIsOpen(false)}
+                className="block py-3 text-muted-foreground hover:text-foreground transition-colors"
+              >
+                Volver al Inicio
+              </Link>
+            )}
+            <a
+              href="#reservas"
+              onClick={() => setIsOpen(false)}
+              className="block py-3 text-primary font-medium"
+            >
+              Reservar Mesa
+            </a>
+          </nav>
         )}
       </div>
     </header>
